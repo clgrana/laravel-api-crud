@@ -12,7 +12,8 @@ class CityController extends Controller
      * @return mixed
      * list cities
      */
-    public function index(){
+    public function index()
+    {
         $cities = City::get();
         return response()->json($cities, 200);
     }
@@ -22,8 +23,16 @@ class CityController extends Controller
      * @return mixed
      * show city
      */
-    public function show($id){
+    public function show($id)
+    {
         $city = City::findOrfail($id);
+        $city = [
+            'id' => $city->id,
+            'city' => $city->city,
+            'uf' => $city->uf,
+            'created_at' => $city->created_at,
+            'updated_at' => $city->updated_at
+        ];
         return response()->json($city, 200);
     }
 }
