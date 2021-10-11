@@ -1,0 +1,27 @@
+version: '2'
+services:
+  db:
+    image: 'mysql:8.0.22'
+    container_name: database
+    command: '--default-authentication-plugin=mysql_native_password  --explicit_defaults_for_timestamp --sql_mode=""'
+    environment:
+      MYSQL_DATABASE: database
+      MYSQL_USER: cairo
+      MYSQL_PASSWORD: '123456'
+      MYSQL_ROOT_PASSWORD: '123456'
+    volumes:
+      - './docker/db:/var/lib/mysql'
+    ports:
+      - '3323:3306'
+  myadmin:
+    image: 'phpmyadmin/phpmyadmin:latest'
+    container_name: crud_api_my_admin
+    links:
+      - db
+    ports:
+      - '8099:80'
+    environment:
+      PMA_HOST: db
+      PMA_USER: cairo
+      PMA_PASSWORD: '123456'
+      UPLOAD_LIMIT: 300000000
